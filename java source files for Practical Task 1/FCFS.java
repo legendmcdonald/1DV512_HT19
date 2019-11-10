@@ -7,10 +7,14 @@
  */
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+
+import static java.util.Collections.*;
 
 public class FCFS{
 
-	private int FCT;
+
 	// The list of processes to be scheduled
 	public ArrayList<Process> processes;
 
@@ -24,18 +28,24 @@ public class FCFS{
 
 	public void run() {
 		// TODO Implement the FCFS algorithm here
-        /*loop through the process and the set as follows.
+        /*loop through the process, sort and the set;
 		-Completion Time
 	    -Turn Around Time
 		-Waiting Time
-         */
+*/
+
 		for(int i=0; i<processes.size(); i++){
 			Process temp=processes.get(i);
 
+			//sorts all the process in ascending order
+			sort(processes, new sort());
+
 			//set the the time for a process to be completed
 			temp.setCompletedTime(findCompTime(temp));
+
 			//set the turn around time
 			temp.setTurnaroundTime(findTurnAroundTime(temp));
+
 			//waiting time for the next process
 			temp.setWaitingTime(findWaitingTime(temp));
 
@@ -46,43 +56,63 @@ public class FCFS{
 	}
 
 	//function to find the waiting time for all processes
-	private int findWaitingTime(Process wt) {
-		int FWT =wt.getTurnaroundTime()-wt.getBurstTime();
-		return FWT;
+	private int findWaitingTime(Process wt)
+	{
+		if(wt.getTurnaroundTime()<0){
+			System.out.println("Can not calculate Waiting Time!");
+		}
+		return wt.getTurnaroundTime()-wt.getBurstTime();
 	}
 
 
 	//function to calculate turn around time
-	private int findTurnAroundTime (Process tat){
-		int FTAT= tat.getCompletedTime()-tat.getArrivalTime();
-		return FTAT;
+	private int findTurnAroundTime (Process tat)
+	{
+
+		//System.out.println(tat.getCompletedTime() -tat.getArrivalTime());
+		if (tat.getCompletedTime()<0){
+			System.out.println("Can not calculate Turn Around Time!");
+		}
+		return tat.getCompletedTime()-tat.getArrivalTime();
+
 	}
+
 
 	/*To calculate the completed time for processes
 	we check to conditions below.
 	* */
-	private int findCompTime( Process ct){
-
-		if (FCT < ct.getArrivalTime()) {
+	private int FCT;
+	private int findCompTime( Process ct)
+	{
+		if (FCT <= ct.getArrivalTime()) {
 			FCT=ct.getArrivalTime()+ct.getBurstTime();
 		}
 			else{
-
 			FCT = FCT + ct.getBurstTime();
 			}
-
 		return FCT;
 	}
 
-	private int sort(Process sort) {
+	public class sort implements Comparator<Process>
+	{
+				// Used for sorting in ascending order of
+				@Override
+				public int compare(Process p1, Process p2) {
 
-		return 0;
+					return p1.getArrivalTime()-p2.getArrivalTime();
+				}
+
+
 	}
 
 	public void printTable() {
 		// TODO Print the list of processes in form of a table here
 
+		System.out.println("PID");
+
 	}
+
+
 
 	public void printGanttChart() {
 		// TODO Print the demonstration of the scheduling algorithm using Gantt Chart
