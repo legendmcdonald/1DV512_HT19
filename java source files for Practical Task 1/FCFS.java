@@ -55,6 +55,8 @@ public class FCFS{
 
 	}
 
+
+
 	//function to find the waiting time for all processes
 	private int findWaitingTime(Process wt)
 	{
@@ -103,13 +105,20 @@ public class FCFS{
 				}
 
 
-	}
 
+	}
 	public void printTable() {
 		// TODO Print the list of processes in form of a table here
+		System.out.print("-------------------------------------------\n");
+		System.out.println("PID     AT      BT      CT     TAT     WT");
+		for(int i=0; i<processes.size(); i++) {
+			Process temp = processes.get(i);
 
-		System.out.println("PID");
+			System.out.println(" "+temp.getProcessId() + "\t\t" + temp.getArrivalTime()+"\t\t"+ temp.getBurstTime()+"\t\t "
+					+temp.getCompletedTime()+"\t\t"+temp.getTurnaroundTime()+"\t\t"+temp.getWaitingTime());
 
+		}
+		System.out.print("-------------------------------------------\n");
 	}
 
 
@@ -118,5 +127,4 @@ public class FCFS{
 		// TODO Print the demonstration of the scheduling algorithm using Gantt Chart
 
 	}
-
 }
