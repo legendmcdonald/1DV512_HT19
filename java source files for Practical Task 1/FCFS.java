@@ -135,12 +135,11 @@ public class FCFS {
 
 			}else {
 				if (processes.get(i - 1).completedTime < temp.arrivalTime) {
-
-					int help = temp.getArrivalTime() - processes.get(i - 1).completedTime;
+					int help = temp.getArrivalTime() - processes.get(i-1).completedTime;
 					for (int j = 0; j < help; j++) {
-
                         slash = slash + "≠";
                         cpt = cpt + ' ';
+
 
 					}
                     slash = slash + "||";
@@ -149,25 +148,35 @@ public class FCFS {
 
 			}
 
-			for (int j=0; j<temp.getBurstTime()+2; j++) {
-				if (j == temp.getBurstTime()/2){
-                    slash = slash + ("  P" + temp.processId);
-
+			for (int j=0; j<temp.getBurstTime()*2; j++) {
+				if (j == temp.getBurstTime()-1){
+					slash = slash + (" P" + temp.processId);
+					cpt = cpt + "   ";
 					j++;
 				}
+
                 slash = slash + " ";
                 cpt = cpt + " ";
 			}
 
 					if(temp.completedTime<10)  {
                         cpt = cpt + (temp.completedTime + " ");
-					}   else{
-                        cpt = cpt + ("   " + temp.completedTime);
 					}
-            slash = slash + "||";
+
+				/*	if(i == processes.size()-1) {
+				    slash = slash +"|";
+			        }
+
+				 */
+
+					else{
+                        cpt = cpt + (temp.completedTime);
+					}
+
+					slash = slash + "||";
 
 			}
-		
+
 		for(int i=0;i<slash.length();i++){
             Equ = Equ + "=";
 				}
