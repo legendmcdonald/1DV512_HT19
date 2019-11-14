@@ -1,0 +1,3 @@
+Execute the minMain class to enable the prints out of the printTable and printGanttChart() from the FCFS class
+
+NB: Other tests are commented but it can be also tested by uncommenting. 
