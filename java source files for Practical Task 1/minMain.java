@@ -1,10 +1,10 @@
 import java.util.ArrayList;
 
-public class Main {
+public class minMain {
     public static void main(String[] args) {
         ArrayList<Process> processes= new ArrayList<>();
 
- /*
+     /*
         //test3
         processes.add(new Process(1, 0, 4));
         processes.add(new Process(2, 2, 3));
@@ -33,8 +33,8 @@ public class Main {
         processes.add(new Process(1, 0, 18));
         processes.add(new Process(2, 0, 5));
         processes.add(new Process(3, 0, 7));
-*/
 
+    */
 
 
         //test5
@@ -46,8 +46,10 @@ public class Main {
 
 
 
-
-
+    /*
+    Call the other class First Come First Serve to enable the execution print out the
+    printTable and printGanttChart().
+    */
         FCFS temp = new FCFS(processes);
         temp.run();
         temp.printTable();
