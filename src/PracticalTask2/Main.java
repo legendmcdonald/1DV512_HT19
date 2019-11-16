@@ -20,7 +20,7 @@ public class Main {
         	simulationTime = Integer.parseInt(args[0]); // the first parameter is the simulation time
         
     	dp.initialize(simulationTime, seed); // initialize the required objects
-    	dp.start(); // start the simulation process
+    	dp.start(); // start the simulation process.
 
     	dp.printTable();
     }

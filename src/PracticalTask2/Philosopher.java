@@ -123,7 +123,7 @@ public class Philosopher implements Runnable {
 		 * Release the chopsticks.
 		 * ^^^ Repeat until the thread is interrupted 
 		 * 		 
-		 * Increment the thinking/hungry/eating turns counter *when each turn starts*.
+		 * Increment the thinking/hungry/eating turns counter *when each turn starts*..
 		 * 
 		 * Update the duration of each turn *after the turn is completely finished*.
 		 * Keep track of total hungry turn durations by getting the current timestamp with System.currentTimeMillis()

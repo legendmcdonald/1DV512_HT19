@@ -42,7 +42,7 @@ public class DiningPhilosopher {
 			}
 
 			/*
-			 * Now we start the rest of the threads, which are T0, T2, and T4
+			 * Now we start the rest of the threads, which are T0, T2, and T4.
 			 */
 			for (int i = 0; i < NUMBER_OF_PHILOSOPHERS; i+=2) {
 				executorService.execute(philosophers.get(i));

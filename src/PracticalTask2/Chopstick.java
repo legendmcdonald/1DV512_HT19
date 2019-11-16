@@ -30,7 +30,7 @@ public class Chopstick {
 	 * Please note that the same chopstick can not be picked up by more than one philosopher at a time.
 	 * Use the myLock to lock this chopstick. Print the logs only when the lock has been acquired. 
 	 * The myLock.tryLock() method provides a boolean value indicating whether the lock was acquired or not.
-	 * Further documentation: https://docs.oracle.com/javase/7/docs/api/java/util/concurrent/locks/ReentrantLock.html#tryLock()
+	 * Further documentation: https://docs.oracle.com/javase/7/docs/api/java/util/concurrent/locks/ReentrantLock.html#tryLock().
 	 */
 }
 

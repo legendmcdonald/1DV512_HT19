@@ -72,7 +72,7 @@ public class DiningPhilosopherTest {
 
 		dp.initialize(simTime, seed); // initialize the required objects
 
-		dp.start(); // start the simulation process
+		dp.start(); // start the simulation process.
 
 		ArrayList<Philosopher> philosophers = dp.getPhilosophers(); // get the philosophers
 
