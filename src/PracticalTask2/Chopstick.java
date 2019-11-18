@@ -6,6 +6,7 @@
  * Date: 	November 2019
  */
 package PracticalTask2;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -32,5 +33,7 @@ public class Chopstick {
 	 * The myLock.tryLock() method provides a boolean value indicating whether the lock was acquired or not.
 	 * Further documentation: https://docs.oracle.com/javase/7/docs/api/java/util/concurrent/locks/ReentrantLock.html#tryLock().
 	 */
+
 }
+
 

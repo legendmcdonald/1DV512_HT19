@@ -63,11 +63,28 @@ public class DiningPhilosopher {
 			 *  Add comprehensive comments to explain your implementation.
 			 */
 
+			//in order to stop all philosophers they all should have been eating and be full
+			for (int i=0; i<NUMBER_OF_PHILOSOPHERS; i++){
+				philosophers.get(i).status(true);
+			}
+
+
 		} finally {
 			executorService.shutdown();
 			executorService.awaitTermination(10, TimeUnit.MILLISECONDS);
 		}
 	}
+	/*to help get the ids
+	public Chopstick getChopstickByID(int id) {
+		for(int i=0; i<chopsticks.size(); i++){
+			if (id == i){
+				return chopsticks.get(i);
+			}
+		}
+		return null;
+	}
+
+	 */
 
 	public void initialize(int simulationTime, int randomSeed) {
 		SIMULATION_TIME = simulationTime;
@@ -86,7 +103,32 @@ public class DiningPhilosopher {
 		 * Add comprehensive comments to explain your implementation.
 		 */
 
-	}
+		//add new chopstick
+		Chopstick c1 = new Chopstick(1);
+		chopsticks.add(c1);
+		Chopstick c2 = new Chopstick(2);
+		chopsticks.add(c2);
+		Chopstick c3 = new Chopstick(3);
+		chopsticks.add(c3);
+		Chopstick c4 = new Chopstick(4);
+		chopsticks.add(c4);
+		Chopstick c5 = new Chopstick(5);
+		chopsticks.add(c5);
+
+		//**add new philosopher
+		Philosopher p1= new Philosopher(0,c2,c1,100,true);
+        philosophers.add(p1);
+		Philosopher p2= new Philosopher(1,c3,c2,101,true);
+		philosophers.add(p2);
+		Philosopher p3= new Philosopher(2,c4,c3,102,true);
+		philosophers.add(p3);
+		Philosopher p4= new Philosopher(3,c5,c4,103,true);
+		philosophers.add(p4);
+		Philosopher p5= new Philosopher(4,c1,c5,104,true);
+		philosophers.add(p5);
+		}
+
+
 
 	public ArrayList<Philosopher> getPhilosophers() {
 		return philosophers;
@@ -103,13 +145,13 @@ public class DiningPhilosopher {
 		System.out.println("PID \tATT \tAET \tAHT \t#TT \t#ET \t#HT");
 
 		for (Philosopher p : philosophers) {
-			System.out.println(p.getId() + "\t"
-					+ df2.format(p.getAverageThinkingTime()) + "\t"
-					+ df2.format(p.getAverageEatingTime()) + "\t"
-					+ df2.format(p.getAverageHungryTime()) + "\t"
-					+ p.getNumberOfThinkingTurns() + "\t"
-					+ p.getNumberOfEatingTurns() + "\t"
-					+ p.getNumberOfHungryTurns() + "\t");
+			System.out.println(" "+p.getId() + "\t"
+					+df2.format(p.getAverageThinkingTime()) + "\t"
+					+df2.format(p.getAverageEatingTime()) + "\t"
+					+df2.format(p.getAverageHungryTime()) + "\t"
+					+p.getNumberOfThinkingTurns() + "\t"
+					+p.getNumberOfEatingTurns() + "\t"
+					+p.getNumberOfHungryTurns() + "\t");
 		}
 
 		System.out.println("---------------------------------------------------\n");
