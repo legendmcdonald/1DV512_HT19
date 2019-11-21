@@ -74,17 +74,7 @@ public class DiningPhilosopher {
 			executorService.awaitTermination(10, TimeUnit.MILLISECONDS);
 		}
 	}
-	/*to help get the ids
-	public Chopstick getChopstickByID(int id) {
-		for(int i=0; i<chopsticks.size(); i++){
-			if (id == i){
-				return chopsticks.get(i);
-			}
-		}
-		return null;
-	}
 
-	 */
 
 	public void initialize(int simulationTime, int randomSeed) {
 		SIMULATION_TIME = simulationTime;
@@ -122,7 +112,7 @@ public class DiningPhilosopher {
 		philosophers.add(p2);
 		Philosopher p3= new Philosopher(2,c4,c3,102,true);
 		philosophers.add(p3);
-		Philosopher p4= new Philosopher(3,c5,c4,103,true);
+		Philosopher p4= new Philosopher(3,c4,c4,103,true);
 		philosophers.add(p4);
 		Philosopher p5= new Philosopher(4,c1,c5,104,true);
 		philosophers.add(p5);
@@ -142,7 +132,7 @@ public class DiningPhilosopher {
 	public void printTable() {
 		DecimalFormat df2 = new DecimalFormat(".##");
 		System.out.println("\n---------------------------------------------------");
-		System.out.println("PID \tATT \tAET \tAHT \t#TT \t#ET \t#HT");
+		System.out.println("PID \tATT \t AET \tAHT \t#TT \t#ET \t#HT");
 
 		for (Philosopher p : philosophers) {
 			System.out.println(" "+p.getId() + "\t"
