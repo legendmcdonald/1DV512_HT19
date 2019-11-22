@@ -6,8 +6,8 @@
  * Date: 	November 2019
  */
 package PracticalTask2;
-		import java.util.Random;
-		import java.util.concurrent.TimeUnit;
+import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 public class Philosopher implements Runnable {
 
@@ -36,16 +36,14 @@ public class Philosopher implements Runnable {
 	private double eatingTime = 0;
 	private double hungryTime = 0;
 
-	private volatile boolean isFull = false;//using volatile to register isFull on the memory.
-	private enum State {THINKING, HUNGRY, EATING}
-
-	private State state;
+	protected volatile boolean eaten = false;//using volatile to register eaten on the memory.
+	private boolean needSomeFood = false;
 
 	public Philosopher(int id, Chopstick leftChopstick, Chopstick rightChopstick, int seed, boolean debug) {
 		this.id = id;
 		this.leftChopstick = leftChopstick;
 		this.rightChopstick = rightChopstick;
-		state = State.THINKING;
+
 
 		this.DEBUG = debug;
 
@@ -98,8 +96,10 @@ public class Philosopher implements Runnable {
 		 * Return the average hungry time
 		 * Add comprehensive comments to explain your implementation
 		 */
-		if (hungryTime == 0)
+		if (hungryTime == 0){
 			return 0;
+		}
+
 		return getTotalHungryTime() / numberOfHungryTurns;
 
 	}
@@ -125,12 +125,12 @@ public class Philosopher implements Runnable {
 	}
 
 	public double getTotalHungryTime() {
+
+
 		return hungryTime;
 	}
 
-	public void status(boolean isFull) {
-		this.isFull = isFull;
-	}
+
 
 
 	@Override
@@ -161,54 +161,25 @@ public class Philosopher implements Runnable {
 		 * Add comprehensive comments to explain your implementation, including deadlock prevention/detection.
 		 * You should start with a straightforward implementation, but you will eventually have to make it more sophisticated
 		 * w.r.t the order (and conditions) of the actions and the threads synchronization in order to pass the tests with the expected results!
- */
-/*
-				think();
-				switch (state){
-					case THINKING:
-						think();
-						state =State.HUNGRY;
-						break;
-					case HUNGRY:
-						leftChopstick.getLock().tryLock(10, TimeUnit.MILLISECONDS);
-							System.out.println("Philosopher " + this.getId() + " picked-up " + leftChopstick.getId() + " - Left Chopstick");
-						rightChopstick.getLock().tryLock(10, TimeUnit.MILLISECONDS);
-						System.out.println("Philosopher " + this.getId() + " picked-up " + rightChopstick.getId() + " - Right Chopstick");
-
-						state =State.EATING;
-							break;
-					case EATING:
-						eat();
-						state = State.THINKING;
-						rightChopstick.getLock().unlock();
-						System.out.println("Philosopher " + this.getId() + " released " + rightChopstick.getId() + "- Right Chopstick");
-
-						leftChopstick.getLock().unlock();
-						System.out.println("Philosopher " + this.getId() + " released " + leftChopstick.getId() + "- Left Chopstick");
-				            break;
-
-						}
-
-			*/
-
+		 */
 
 
 		try
 		{
-			while (!isFull) {
+			while (!eaten) {
 
 
 				//philosopher thinking
 				think();
 				//TimeUnit.SECONDS.sleep(2);
 				//start hungry time.
-				long start = System.currentTimeMillis();
+				double start = System.currentTimeMillis();
 				//philosopher hungry
-				Hungry();
-				boolean eaten = false;
+				//Hungry();
+
 
 				synchronized (this) {
-					while (!eaten) {
+					while (needSomeFood) {
 						//picks up left chopstick if available
 						if (leftChopstick.getLock().tryLock(10, TimeUnit.MILLISECONDS)) {
 							System.out.println("Philosopher " + this.getId() + " picked-up " + leftChopstick.getId() + " - Left Chopstick");
@@ -218,30 +189,36 @@ public class Philosopher implements Runnable {
 								System.out.println("Philosopher " + this.getId() + " picked-up " + rightChopstick.getId() + " - Right Chopstick");
 
 
+								needSomeFood = false;
+							} else {
+								leftChopstick.getLock().unlock();
+								System.out.println("Philosopher " + this.getId() + " released " + leftChopstick.getId() + "- Left Chopstick");
+							}
+						}
+					}
+				}
 								//end hungry time
-								long end = System.currentTimeMillis();
+								double end = System.currentTimeMillis();
 								hungryTime += end - start;
+								Hungry();
 
 								//Philosopher starts eating.
 								eat();
-								eaten=true;
+					//releases left chopstick if available
+					leftChopstick.getLock().unlock();
+					System.out.println("Philosopher " + this.getId() + " released " + leftChopstick.getId() + "- Left Chopstick");
 
 								//releases right chopstick if available
 								rightChopstick.getLock().unlock();
 								System.out.println("Philosopher " + this.getId() + " released " + rightChopstick.getId() + "- Right Chopstick");
-							}
 
-							//releases left chopstick if available
-							leftChopstick.getLock().unlock();
-							System.out.println("Philosopher " + this.getId() + " released " + leftChopstick.getId() + "- Left Chopstick");
-						}
-					}
-				}
+
+
+
 
 			}
 		} catch (InterruptedException e) {
 			e.printStackTrace();
-			isFull=true;
 		}
 	}
 
@@ -249,14 +226,17 @@ public class Philosopher implements Runnable {
 
 	private void think() throws InterruptedException {
 		int ran = randomGenerator.nextInt(1000);
-		System.out.println("Philosopher " + this.getId() + " is THINKING "+ran);
-		// random number 0-999 thinking time.
-		thinkingTime += ran;
-
+		if(DEBUG==true) {
+			System.out.println("Philosopher " + this.getId() + " is THINKING " + ran);
+		}
 		//increase number of thinking turns.
 		numberOfThinkingTurns++;
+
 		Thread.sleep(ran);
-		isFull=true ;
+		// random number 0-999 thinking time.
+		thinkingTime += ran;
+		needSomeFood = true;
+
 	}
 
 	private void Hungry() {
@@ -268,15 +248,17 @@ public class Philosopher implements Runnable {
 
 	private void eat() throws InterruptedException {
 		int ran = randomGenerator.nextInt(1000);
-		System.out.println("Philosopher " + this.getId() + " is EATING "+ran);
-		// random number 0-999 eating time.
-		eatingTime += ran;
+		if(DEBUG==true) {
+			System.out.println("Philosopher " + this.getId() + " is EATING " + ran);
+		}
 		//increase number of eating turns.
 		numberOfEatingTurns++;
 		Thread.sleep(ran);
-		isFull=true;
-	}
-
-
+		// random number 0-999 eating time.
+		eatingTime += ran;
 
 	}
+
+
+
+}

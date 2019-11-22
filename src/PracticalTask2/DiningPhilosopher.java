@@ -65,7 +65,7 @@ public class DiningPhilosopher {
 
 			//in order to stop all philosophers they all should have been eating and be full
 			for (int i=0; i<NUMBER_OF_PHILOSOPHERS; i++){
-				philosophers.get(i).status(true);
+				philosophers.get(i).eaten=true;
 			}
 
 
@@ -94,6 +94,8 @@ public class DiningPhilosopher {
 		 */
 
 		//add new chopstick
+		Chopstick c0 = new Chopstick(0);
+		chopsticks.add(c0);
 		Chopstick c1 = new Chopstick(1);
 		chopsticks.add(c1);
 		Chopstick c2 = new Chopstick(2);
@@ -102,20 +104,18 @@ public class DiningPhilosopher {
 		chopsticks.add(c3);
 		Chopstick c4 = new Chopstick(4);
 		chopsticks.add(c4);
-		Chopstick c5 = new Chopstick(5);
-		chopsticks.add(c5);
 
 		//**add new philosopher
-		Philosopher p1= new Philosopher(0,c2,c1,100,true);
-        philosophers.add(p1);
-		Philosopher p2= new Philosopher(1,c3,c2,101,true);
+		Philosopher p0= new Philosopher(0,c1,c0,SEED,DEBUG);
+        philosophers.add(p0);
+		Philosopher p1= new Philosopher(1,c2,c1,SEED,DEBUG);
+		philosophers.add(p1);
+		Philosopher p2= new Philosopher(2,c3,c2,SEED,DEBUG);
 		philosophers.add(p2);
-		Philosopher p3= new Philosopher(2,c4,c3,102,true);
+		Philosopher p3= new Philosopher(3,c4,c3,SEED,DEBUG);
 		philosophers.add(p3);
-		Philosopher p4= new Philosopher(3,c4,c4,103,true);
+		Philosopher p4= new Philosopher(4,c0,c4,SEED,DEBUG);
 		philosophers.add(p4);
-		Philosopher p5= new Philosopher(4,c1,c5,104,true);
-		philosophers.add(p5);
 		}
 
 
