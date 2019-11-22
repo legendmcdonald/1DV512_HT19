@@ -167,6 +167,7 @@ public class Philosopher implements Runnable {
 		try
 		{
 			while (!eaten) {
+				
 
 
 				//philosopher thinking
@@ -175,13 +176,14 @@ public class Philosopher implements Runnable {
 				//start hungry time.
 				double start = System.currentTimeMillis();
 				//philosopher hungry
-				//Hungry();
+				Hungry();
 
 
 				synchronized (this) {
 					while (needSomeFood) {
 						//picks up left chopstick if available
 						if (leftChopstick.getLock().tryLock(10, TimeUnit.MILLISECONDS)) {
+							
 							System.out.println("Philosopher " + this.getId() + " picked-up " + leftChopstick.getId() + " - Left Chopstick");
 
 							//picks up right chopstick if available
@@ -197,10 +199,11 @@ public class Philosopher implements Runnable {
 						}
 					}
 				}
+					
 								//end hungry time
 								double end = System.currentTimeMillis();
 								hungryTime += end - start;
-								Hungry();
+
 
 								//Philosopher starts eating.
 								eat();
@@ -231,7 +234,6 @@ public class Philosopher implements Runnable {
 		}
 		//increase number of thinking turns.
 		numberOfThinkingTurns++;
-
 		Thread.sleep(ran);
 		// random number 0-999 thinking time.
 		thinkingTime += ran;
@@ -241,7 +243,9 @@ public class Philosopher implements Runnable {
 
 	private void Hungry() {
 		//increase number of hungary turns.
-		System.out.println("Philosopher " + this.getId() + " is HUNGRY ");
+		if(DEBUG==true) {
+			System.out.println("Philosopher " + this.getId() + " is HUNGRY ");
+		}
 		numberOfHungryTurns++;
 
 	}
